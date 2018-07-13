@@ -1,0 +1,32 @@
+require: rubocop-rspec
+
+RegexpLiteral:
+  Exclude:
+    - '**/Guardfile'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'spec/**/*.rb'
+    - 'db/schema.rb'
+
+Style/Documentation:
+  Exclude:
+    - '**/*.rb'
+
+RSpec/InstanceVariable:
+  Exclude:
+    - 'spec/views/**/*.rb'
+
+RSpec/MultipleExpectations:
+  Exclude:
+    - 'spec/views/**/*.rb'
+
+Metrics/LineLength:
+  Exclude:
+    - 'Rakefile'
+    - '**/Guardfile'
+
+Layout/EndOfLine:
+  EnforcedStyle: lf
