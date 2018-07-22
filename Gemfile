@@ -5,6 +5,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.1'
 
+gem 'activesupport'
+
 group :development, :test do
   gem 'rspec'
   gem 'simplecov', require: false
