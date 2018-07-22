@@ -41,5 +41,22 @@ describe JobsProcessor do
         expect(jobs_processor.process(jobs_list)).to eq('acb')
       end
     end
+
+    context 'when we pass jobs with multiple dependencies' do
+      let(:jobs_list) do
+        {
+          'a' => nil,
+          'b' => 'c',
+          'c' => 'f',
+          'd' => 'a',
+          'e' => 'b',
+          'f' => nil
+        }
+      end
+
+      it 'returns this same list' do
+        expect(jobs_processor.process(jobs_list)).to eq('afcbde')
+      end
+    end
   end
 end
