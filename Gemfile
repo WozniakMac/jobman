@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.1'
 
 gem 'activesupport'
+gem 'rake'
 
 group :development, :test do
   gem 'rspec'
