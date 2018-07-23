@@ -30,3 +30,6 @@ Metrics/LineLength:
 
 Layout/EndOfLine:
   EnforcedStyle: lf
+
+Metrics/LineLength:
+  Max: 100

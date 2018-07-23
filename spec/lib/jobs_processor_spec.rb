@@ -58,5 +58,38 @@ describe JobsProcessor do
         expect(jobs_processor.process(jobs_list)).to eq('afcbde')
       end
     end
+
+    context 'when job depend on himself' do
+      let(:jobs_list) do
+        {
+          'a' => nil,
+          'b' => nil,
+          'c' => 'c'
+        }
+      end
+
+      it 'raise error' do
+        expect { jobs_processor.process(jobs_list) }
+          .to raise_error(RuntimeError, "Jobs can't have circular dependencies")
+      end
+    end
+
+    context 'when jobs have circular dependency' do
+      let(:jobs_list) do
+        {
+          'a' => nil,
+          'b' => 'c',
+          'c' => 'f',
+          'd' => 'a',
+          'e' => nil,
+          'f' => 'b'
+        }
+      end
+
+      it 'raise error' do
+        expect { jobs_processor.process(jobs_list) }
+          .to raise_error(RuntimeError, "Jobs can't have circular dependencies")
+      end
+    end
   end
 end
