@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'active_support/all'
+require_relative './jobs_list'
 
 class JobsProcessor
   def process(jobs_list)
@@ -8,8 +9,8 @@ class JobsProcessor
     @processed_jobs = []
     @jobs_in_progress = []
 
-    while @jobs_list.count.positive?
-      job = @jobs_list.keys.first
+    while @jobs_list.next?
+      job = @jobs_list.next
       process_job(job)
     end
 
@@ -20,11 +21,11 @@ class JobsProcessor
 
   def process_job(job)
     @jobs_in_progress << job
-    dependency = @jobs_list[job]
+    dependency = @jobs_list.dependency(job)
 
     if dependency.present?
       raise "Jobs can't have circular dependencies" if @jobs_in_progress.include?(dependency)
-      process_job(dependency) if @jobs_list.keys.include?(dependency)
+      process_job(dependency) if @jobs_list.contain?(dependency)
     end
 
     @processed_jobs << job

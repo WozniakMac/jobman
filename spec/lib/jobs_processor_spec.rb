@@ -2,19 +2,23 @@
 
 require 'spec_helper'
 require_relative '../../lib/jobs_processor'
+require_relative '../../lib/jobs_list'
 
 describe JobsProcessor do
   subject(:jobs_processor) { described_class.new }
 
   describe '.process' do
+    let(:jobs_list_hash) { {} }
+    let(:jobs_list) { JobsList.new(jobs_list_hash) }
+
     context 'when job list is empty' do
       it 'returns empty list' do
-        expect(jobs_processor.process({})).to eq('')
+        expect(jobs_processor.process(jobs_list)).to eq('')
       end
     end
 
     context 'when we pass jobs list without dependeicies' do
-      let(:jobs_list) do
+      let(:jobs_list_hash) do
         {
           'a' => nil,
           's' => nil,
@@ -29,7 +33,7 @@ describe JobsProcessor do
     end
 
     context 'when we pass jobs with one dependency' do
-      let(:jobs_list) do
+      let(:jobs_list_hash) do
         {
           'a' => nil,
           'b' => 'c',
@@ -43,7 +47,7 @@ describe JobsProcessor do
     end
 
     context 'when we pass jobs with multiple dependencies' do
-      let(:jobs_list) do
+      let(:jobs_list_hash) do
         {
           'a' => nil,
           'b' => 'c',
@@ -60,7 +64,7 @@ describe JobsProcessor do
     end
 
     context 'when job depend on himself' do
-      let(:jobs_list) do
+      let(:jobs_list_hash) do
         {
           'a' => nil,
           'b' => nil,
@@ -75,7 +79,7 @@ describe JobsProcessor do
     end
 
     context 'when jobs have circular dependency' do
-      let(:jobs_list) do
+      let(:jobs_list_hash) do
         {
           'a' => nil,
           'b' => 'c',
